@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nrpe-ubuntu-portal-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nrpe-ubuntu-portal
+  template:
+    metadata:
+      labels:
+        app: nrpe-ubuntu-portal
+    spec:
+      containers:
+      - name: nrpe-ubuntu-portal
+        image: wexmaster/nrpe-ubuntu-portal:lastest
+        ports:
+        - containerPort: 5666
+        resources:
+          limits:
+            memory: 2Gi
+            cpu: 1000m
+          requests:
+            memory: 1Gi
+            cpu: 500m
