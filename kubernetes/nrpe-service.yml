@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nrpe-service-portal
+spec:
+  selector:
+    app: nrpe-ubuntu-portal
+  ports:
+  - name: nrpe
+    port: 5666
+    targetPort: 5666
+  type: ClusterIP
