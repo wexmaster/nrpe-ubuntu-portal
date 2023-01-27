@@ -10,7 +10,7 @@ docker build -t nrpe-ubuntu-portal .
 docker run  -d -p 5666:5666 --name nrpe-centreon  nrpe-ubuntu-portal
 ```
 
-Ver LOG ( veremos mas datos pero ver al inicio del log que esten arrancados los servicios
+Ver LOG ( veremos mas datos pero ver al inicio del log que esten arrancados los servicios )
 ```
 docker logs nrpe-centreon
 Starting memcached: memcached.
