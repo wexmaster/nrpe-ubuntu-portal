@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nrpe-service-portal
+  name: nrpe-service-portal-loadbalancer
+spec:
+  selector:
+    app: nrpe-ubuntu-portal
+  ports:
+    - protocol: TCP
+      port: 5666
+      targetPort: 5666
+  type: LoadBalancer
+  loadBalancerIP: 10.52.38.200
