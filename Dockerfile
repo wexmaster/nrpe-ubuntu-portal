@@ -5,10 +5,12 @@ RUN apt-get update -y
 # Install Required build tools
 RUN apt-get install -y \
         nagios-nrpe-server \
-    nagios-plugins \
+        nagios-plugins \
         python3-pip \
         memcached \
         libmemcached-tools \
+        mtr \
+        vim \
         tzdata
 
 RUN python3 -m pip install pysnmp==4.4.12 \
@@ -27,6 +29,12 @@ RUN chmod 0757 /var/run/memcached
 RUN mkdir -p /usr/lib/nagios/plugins/portal
 ADD ./snmpvsat.py /usr/lib/nagios/plugins/portal/snmpvsat.py
 RUN chmod 755 /usr/lib/nagios/plugins/portal/snmpvsat.py
+
+# check_hosts_alive
+run mkdir -p /var/log/centreon/centplugins/
+run mkdir -p /usr/lib/nagios/plugins/scripts/
+ADD ./scripts/check_hosts_alive.sh /usr/lib/nagios/plugins/scripts/check_hosts_alive.sh
+RUN chmod 755 /usr/lib/nagios/plugins/scripts/check_hosts_alive.sh
 
 ADD ./run.sh entrypoint.sh
 RUN chmod 755 /*.sh
