@@ -8,11 +8,12 @@ from pymemcache.client import base
 
 parser = argparse.ArgumentParser(description='Simple Nagios plugin VSAT')
 parser.add_argument('--assignedip', action='store', default='10.52.38.77',  help="IP Address from VSAT")
+parser.add_argument('--memcachedip', action='store', default='localhost',  help="IP Address memcached")
 
 args = parser.parse_args()
 
 address= args.assignedip
-
+ipmemcache = args.memcachedip
 
 cmd = 'timeout 5 ping -c 3 ' + address
 data = os.popen(cmd).read()
@@ -76,7 +77,7 @@ today = datetime.datetime.now()
 hoy = today.strftime('%d-%m-%Y %H:%M:%S')
 createarray = [{'name':(str(result[0]['name'])), 'data':(int(result[0]['oid'])) }, {'name':(str(result[1]['name'])), 'data':(int(result[1]['oid']))}, {'name':'date', 'data':(str(hoy))}]
 
-client = base.Client(('localhost', 11211), serializer=json_serializer, deserializer=json_deserializer)
+client = base.Client((ipmemcache, 11211), serializer=json_serializer, deserializer=json_deserializer)
 resultmemcache = client.get(address)
 rx = (int(result[0]['oid']))
 tx = (int(result[1]['oid']))
